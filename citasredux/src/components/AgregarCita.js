@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { agregarCitaAction } from '../actions/CitasActions';
 import uuid from 'uuid/v4';
+import { validarFormularioAction } from '../actions/validarActions';
 
 function AgregarCita () {
 
@@ -15,11 +16,27 @@ function AgregarCita () {
     //dispatch para ejecutar nuestras acciones
     const dispatch = useDispatch();
     const agregarNuevaCita = (cita) => dispatch(agregarCitaAction(cita));
+    const validarFormulario = (estado) => dispatch(validarFormularioAction(estado));
+
+    //useSelector es similar a mapStateToProps en Hooks
+    const error = useSelector( ( state ) => state.error);
+
+
+
 
     const submitNuevaCita = e => {
         e.preventDefault();
 
         //validar 
+        if(mascota.trim() === '' || propietario.trim() === '' ||
+        fecha.trim() === '' || hora.trim() === '' ||
+        sintomas.trim() === '') {
+            validarFormulario(true);
+            return;
+        }
+
+        validarFormulario(false);
+
 
         //crear cita y almacenar
         agregarNuevaCita({
@@ -108,7 +125,8 @@ function AgregarCita () {
                         </div>
                     </div>
                 </form>
-               
+                {error.error ? <div className="alert alert-danger text-center 
+                p2">Todos los campos son obligatorios</div> : null}           
             </div>
     </div>
     )

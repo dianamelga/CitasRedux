@@ -3,6 +3,7 @@ import React from 'react';
 import store from './store';
 import { Provider } from 'react-redux';
 import AgregarCita from './components/AgregarCita';
+import ListadoCitas from './components/ListadoCitas';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
           <AgregarCita/>
         </div>
         <div className="col-md-6">
-          Listado aqui
+          <ListadoCitas/>
         </div>
       </div>
       
